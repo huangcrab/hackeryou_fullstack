@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-const users = [
+let users = [
   {
     id: uuid(),
     name: "Phil"
@@ -54,6 +54,13 @@ app.post("/users", (req, res) => {
   });
 });
 
+app.delete("/users/:identifier", (req, res) => {
+  const { identifier } = req.params;
+  const nextUsers = users.filter(user => !user.id === identifier);
+  users = nextUsers;
+
+  res.send(204);
+});
 app.listen(5000, () => {
   console.log("app is running");
 });
